@@ -1,0 +1,28 @@
+[
+  {
+    "bearing_id": 1,
+    "serialNumber": 189315064,
+    "position": "DE",
+    "ball_diameter_mm": 12.7,
+    "pitch_diameter_mm": 45.0,
+    "contact_angle_deg": 0,
+    "num_rollers": 9,
+    "bpfo_hz_at_1x": 3.2,
+    "bpfi_hz_at_1x": 4.8,
+    "bsf_hz_at_1x": 2.1,
+    "ftf_hz_at_1x": 0.4
+  },
+  {
+    "bearing_id": 2,
+    "serialNumber": 189315064,
+    "position": "NDE",
+    "ball_diameter_mm": 10.0,
+    "pitch_diameter_mm": 38.0,
+    "contact_angle_deg": 0,
+    "num_rollers": 8,
+    "bpfo_hz_at_1x": 3.0,
+    "bpfi_hz_at_1x": 4.5,
+    "bsf_hz_at_1x": 2.0,
+    "ftf_hz_at_1x": 0.35
+  }
+]

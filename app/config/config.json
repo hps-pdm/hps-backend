@@ -1,0 +1,64 @@
+{
+  "vibextractor": {
+    "description": "Core RPM estimation and harmonic-tuning parameters.",
+    "EMA_ALPHA": 0.30,
+    "EMA_ALPHA_desc": "Smoothing factor for RPM EMA (0=no smoothing, 1=heavy smoothing).",
+    "SNR_WEAK": 3.0,
+    "SNR_WEAK_desc": "Below this SNR, trust previous RPM more than the new estimate.",
+    "SNR_STRONG": 6.0,
+    "SNR_STRONG_desc": "Above this SNR, accept the new RPM confidently.",
+    "DEFAULT_SEARCH_MIN_HZ": 15.0,
+    "DEFAULT_SEARCH_MIN_HZ_desc": "Lower bound (Hz) of RPM search band.",
+    "DEFAULT_SEARCH_MAX_HZ": 120.0,
+    "DEFAULT_SEARCH_MAX_HZ_desc": "Upper bound (Hz) of RPM search band.",
+    "ORDER_LOCK_SPAN_HZ": 0.6,
+    "ORDER_LOCK_SPAN_HZ_desc": "Span (± Hz) around RPM to refine order locking.",
+    "ORDER_LOCK_STEP_HZ": 0.02,
+    "ORDER_LOCK_STEP_HZ_desc": "Step size (Hz) for order-lock search.",
+    "ORDER_LOCK_MAX_HARM": 4,
+    "ORDER_LOCK_MAX_HARM_desc": "Max harmonic considered in order-lock refinement."
+  },
+  "forecast": {
+    "description": "Defaults for RMS forecasts.",
+    "DEFAULT_HORIZON_DAYS": 7,
+    "DEFAULT_HORIZON_DAYS_desc": "Number of days ahead for RMS forecasts when horizon is not specified."
+  },
+  "thresholds": {
+    "description": "UI-level display thresholds for RMS gauges.",
+    "vel_rms_mm_s": {
+      "ok": 2.8,
+      "ok_desc": "Velocity RMS (mm/s) at or below this is considered OK.",
+      "warning": 4.5,
+      "warning_desc": "Velocity RMS (mm/s) above OK but at/below this is Warning; above is Alarm.",
+      "dependency_note": "Actual limits are ISO group–dependent; group is inferred via RPM/Power (see vibextractor.mclass/power). Use these only as UI hints."
+    },
+    "acc_rms_g": {
+      "ok": 0.71,
+      "ok_desc": "Acceleration RMS (g) at or below this is considered OK.",
+      "warning": 2.42,
+      "warning_desc": "Acceleration RMS (g) above OK but at/below this is Warning; above is Alarm.",
+      "dependency_note": "Bearing warning thresholds also use RPM-dependent beta curve (see bearing_fault_rms.json)."
+    }
+  },
+  "paths": {
+    "description": "Local data files used for metadata and bearing thresholds.",
+    "equipment_metadata": "backend/app/data/info_dat.json",
+    "equipment_metadata_desc": "Primary equipment metadata source (names, types, etc.).",
+    "bearing_thresholds": "backend/app/data/bearing_fault_rms.json",
+    "bearing_thresholds_desc": "Bearing RMS threshold curve (velocity vs beta).",
+    "bearing_info": "backend/app/data/bearing_info.json",
+    "bearing_info_desc": "Bearing geometry / defect frequency reference data."
+  },
+  "threshold_matrix": {
+    "description": "Matrix using existing in-code bands. Velocity follows ISO 10816/20816 groups; acceleration follows RPM-dependent beta curve (bearing_fault_rms.json).",
+    "vel_rms_mm_s": [
+      { "group": 1, "ok": 1.12, "warning": 1.80, "alarm": 2.80 },
+      { "group": 2, "ok": 2.80, "warning": 4.50, "alarm": 7.10 },
+      { "group": 3, "ok": 7.10, "warning": 11.20, "alarm": 18.00 },
+      { "group": 4, "ok": 18.00, "warning": 28.00, "alarm": 28.00 }
+    ],
+    "acc_rms_g": {
+      "note": "Acc thresholds derive from RPM-dependent beta curve. Use ok = 0.5*beta(rpm), warning = 1.0*beta(rpm), alarm = >beta(rpm). See bearing_fault_rms.json."
+    }
+  }
+}
