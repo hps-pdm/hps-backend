@@ -24,13 +24,19 @@ def create_app() -> Flask:
     # Compression (real or no-op)
     Compress(app)
 
-    # Example health endpoint – replace with your real routes
+    # Health endpoint
     @app.get("/api/health")
     def health():
         return {"status": "ok"}
 
-    # TODO: register blueprints, config, etc. here
-    # from .routes import api_bp
-    # app.register_blueprint(api_bp)
+    # Register main API blueprint
+    try:
+        from .api import api as api_bp
+
+        app.register_blueprint(api_bp, url_prefix="/api")
+    except Exception as exc:
+        # In production we want hard failure to surface missing routes;
+        # during early bootstrap you could log instead.
+        raise exc
 
     return app
