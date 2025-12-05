@@ -19,6 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4  # default path: /home/runner/work/<repo>/<repo>
 
+      - name: Show workspace contents
+        run: |
+          echo "PWD=$PWD"
+          ls -la
+          ls -la hps-backend || true
+      
+      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -65,3 +72,4 @@ jobs:
           app-name: 'hps-backend-api'
           slot-name: 'Production'
           package: hps-backend
+
