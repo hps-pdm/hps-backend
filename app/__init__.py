@@ -19,7 +19,14 @@ def create_app() -> Flask:
     app = Flask(__name__)
 
     # CORS: allow all origins on /api/*
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(
+        app,
+        resources={r"/api/*": {"origins": "*"}},
+        supports_credentials=False,
+        allow_headers="*",
+        methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    )
+    
 
     # Compression (real or no-op)
     Compress(app)
