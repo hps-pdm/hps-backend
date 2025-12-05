@@ -12,6 +12,7 @@ except ImportError:
         def init_app(self, app):
             pass
 
+
 def create_app() -> Flask:
     app = Flask(__name__)
 
