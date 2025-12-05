@@ -27,7 +27,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install backend dependencies
-        working-directory: ./hps-backend
+        working-directory: repo/hps-backend
         run: |
           python -m venv antenv
           source antenv/bin/activate
@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: hps-backend
+          path: repo/hps-backend
           if-no-files-found: error
 
   deploy:
@@ -66,5 +66,4 @@ jobs:
         with:
           app-name: 'hps-backend-api'
           slot-name: 'Production'
-          package: hps-backend
-
+          package: repo/hps-backend
