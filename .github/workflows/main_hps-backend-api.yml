@@ -18,28 +18,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: repo
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # Install backend deps so they’re present in the artifact
       - name: Install backend dependencies
-        working-directory: ./hps-backend
+        working-directory: repo/hps-backend
         run: |
           python -m venv antenv
           source antenv/bin/activate
           pip install -r requirements.txt
 
-
-      # Upload only the backend folder (including venv) as artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: hps-backend
-        
+          path: repo/hps-backend
+          if-no-files-found: error
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,7 +52,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-app
-          path: .
+          path: repo
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -67,7 +66,4 @@ jobs:
         with:
           app-name: 'hps-backend-api'
           slot-name: 'Production'
-          package: hps-backend
-
-
-
+          package: repo/hps-backend
