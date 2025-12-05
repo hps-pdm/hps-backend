@@ -26,20 +26,20 @@ jobs:
 
       # Install backend deps so they’re present in the artifact
       - name: Install backend dependencies
+        working-directory: backend
         run: |
-          cd backend
           python -m venv antenv
           source antenv/bin/activate
           pip install -r requirements.txt
+
 
       # Upload only the backend folder (including venv) as artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: |
-            backend
-          if-no-files-found: error
+          path: backend
+        
 
   deploy:
     runs-on: ubuntu-latest
@@ -68,3 +68,4 @@ jobs:
           app-name: 'hps-backend-api'
           slot-name: 'Production'
           package: backend
+
