@@ -27,7 +27,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install backend dependencies
-        working-directory: repo/hps-backend
+        working-directory: ./hps-backend
         run: |
           python -m venv antenv
           source antenv/bin/activate
@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: repo/hps-backend
+          path: hps-backend
           if-no-files-found: error
 
   deploy:
@@ -52,7 +52,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: python-app
-          path: repo
+          path: .
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -66,4 +66,5 @@ jobs:
         with:
           app-name: 'hps-backend-api'
           slot-name: 'Production'
-          package: repo/hps-backend
+          package: hps-backend
+
