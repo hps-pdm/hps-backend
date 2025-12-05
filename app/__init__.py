@@ -18,8 +18,8 @@ def create_app() -> Flask:
     """Application factory used by both local dev and Gunicorn."""
     app = Flask(__name__)
 
-    # CORS
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    # CORS (allow local dev origin)
+    CORS(app, resources={r"/api/*": {"origins": ["http://localhost:5173", "*"]}})
 
     # Compression (real or no-op)
     Compress(app)
